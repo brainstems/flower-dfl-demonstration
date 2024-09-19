@@ -1,7 +1,22 @@
-# flower-dfl-demonstration
-Repo to track developments with Flower.AI DFL Framework. Currently is a fairly vanilla copy of Flower.AI examples and documentation.
-https://flower.ai/docs/framework/
+# flwr-dfl-quickstart: A Flower / HuggingFace app
 
-##### V1 Test
-BS S3 Bucket: bs-llm-sandbox
-BS S3 Dir: /keenanh/ingred_model
+## Install dependencies and project
+
+```bash
+pip install -e .
+```
+
+## Run with the Simulation Engine
+
+In the `flwr-dfl-quickstart` directory, use `flwr run` to run a local simulation:
+
+```bash
+flwr run .
+```
+
+## Run with the Deployment Engine
+
+> \[!NOTE\]
+> An update to this example will show how to run this Flower application with the Deployment Engine and TLS certificates, or with Docker.
+
+
