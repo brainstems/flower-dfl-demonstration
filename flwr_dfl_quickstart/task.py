@@ -13,7 +13,8 @@ from flwr_datasets.partitioner import IidPartitioner
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer, DataCollatorWithPadding
-from quickstart_docker.util import download_JSON_to_dataframe
+from flwr_dfl_quickstart.util import download_JSON_to_dataframe
+import os
 
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -32,17 +33,13 @@ def load_data(partition_id: int, num_partitions: int, model_name: str):
         df = download_JSON_to_dataframe(
             "bs-llm-sandbox",
             "keenanh/training_data.jsonl",
-            aws_access_key_id,
-            aws_secret_access_key,
-            aws_region,
+            os.environ.get("AWS_ACCESS_KEY_ID"),
+            os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            os.environ.get("AWS_REGION"),
         )
-        raw_datasets = (
-            Dataset()
-            .from_pandas(df)
-            .train_test_split(test_size=0.2, seed=42)  # Set seed for reproducibility
-        )
+        raw_dataset = Dataset().from_pandas(df)  # Set seed for reproducibility
         partitioner = IidPartitioner(num_partitions=num_partitions)
-        partitioner.dataset = dataset
+        partitioner.dataset = raw_dataset
         fds = partitioner
     partition = fds.load_partition(partition_id)
     # Divide data: 80% train, 20% test
