@@ -11,6 +11,7 @@ from flwr.common.logger import log
 from tqdm import tqdm
 from pathlib import Path
 import pandas as pd
+import os
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 CHECKPOINT = "mistralai/Mistral-7B-Instruct-v0.2"
@@ -144,9 +145,9 @@ class MistralClient(fl.client.NumPyClient):
 
 
 fl.client.start_client(
-    server_address="127.0.0.1:8080",
+    server_address=os.environ.get("FL_SERVER_ADDRESS", "localhost:8080"),
     client=MistralClient.to_client(),
-    root_certificates=Path(".cache/certificates/ca.crt").read_bytes(),
+    root_certificates=Path("./certificates/ca.crt").read_bytes(),
 )
 
 

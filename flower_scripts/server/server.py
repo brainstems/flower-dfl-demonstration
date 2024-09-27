@@ -4,6 +4,8 @@ from pathlib import Path
 from flwr.common import parameters_to_ndarrays
 from logging import INFO, DEBUG
 from flwr.common.logger import log
+from util import _save_and_upload_global_model
+import os
 
 fl.common.logger.configure(identifier="flowerIngredMistral", filename="log.txt")
 
@@ -36,12 +38,16 @@ class FedAvgWithModelSaving(fl.server.strategy.FedAvg):
         # convert parameters to list of NumPy arrays
         # this will make things easy if you want to load them into a
         # PyTorch or TensorFlow model later
-        ndarrays = parameters_to_ndarrays(parameters)
-        data = {"globa_parameters": ndarrays}
-        filename = str(self.save_path / f"parameters_round_{server_round}.pkl")
-        with open(filename, "wb") as h:
-            pickle.dump(data, h, protocol=pickle.HIGHEST_PROTOCOL)
-        log(1, f"Checkpoint saved to: {filename}")
+        _save_and_upload_global_model(
+            "bs-llm-sandbox",
+            self.save_path,
+            server_round,
+            parameters,
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            aws_region=os.environ.get("AWS_REGION"),
+        )
+        log(1, f"Checkpoint saved to: {self.save_path}")
 
     def evaluate(self, server_round: int, parameters):
         """Evaluate model parameters using an evaluation function."""
@@ -55,7 +61,7 @@ class FedAvgWithModelSaving(fl.server.strategy.FedAvg):
 
 # Create strategy and run server
 strategy = FedAvgWithModelSaving(
-    save_path="./models",  # save model to this directory
+    save_path="keenanh/akash-test-1/",  # save model to this directory
     fraction_fit=0.8,
     fraction_evaluate=0.8,
     evaluate_metrics_aggregation_fn=weighted_average,
@@ -64,11 +70,7 @@ fl.server.start_server(
     server_address="0.0.0.0:8080",
     config=fl.server.ServerConfig(num_rounds=4),
     strategy=strategy,
-    certificates=(
-        Path(".cache/certificates/ca.crt").read_bytes(),
-        Path(".cache/certificates/server.pem").read_bytes(),
-        Path(".cache/certificates/server.key").read_bytes(),
-    ),
+    certificates=(Path("./certificates/ca.crt").read_bytes()),
 )
 
 # Start with Superlink
