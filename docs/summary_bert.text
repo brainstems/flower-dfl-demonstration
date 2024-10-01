@@ -1,0 +1,7 @@
+Evaluation method: bert_score
+Mean of BERTscore_precision: 0.900474048256874
+Mean of BERTscore_recall: 0.8752288314700126
+Mean of BERTscore_F1: 0.8874047622084618
+Mean of dfl_BERTscore_precision: 0.7992889681458473
+Mean of dfl_BERTscore_recall: 0.8630375018715859
+Mean of dfl_BERTscore_F1: 0.8297697624564171
