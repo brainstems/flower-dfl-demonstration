@@ -23,12 +23,12 @@ https://flower.ai/docs/framework/
 ##### V1 Test
 BS S3 Bucket: bs-llm-sandbox
 BS S3 Dir: /keenanh/ingred_model
-![V1 Test Results Screenshot](docs\V1Results.png)
+![V1 Test Results Screenshot](docs/V1Results.png)
 
 ##### Dockerized Test
-![Dockerized Test Results Text](docs\summary.text)
+![Dockerized Test Results Text](docs/summary.text)
 
-![Dockerized Test Results Text](docs\summary_bert.text)
+![Dockerized Test Results Text](docs/summary_bert.text)
 
 
 
