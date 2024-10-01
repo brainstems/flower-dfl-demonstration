@@ -17,8 +17,6 @@ RUN apt-get update && apt-get install -y \
 # Install Python dependencies
 RUN pip install --upgrade pip
 
-# Install llama-cpp-python with CUDA support
-RUN CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1
 
 # Install additional Python dependencies
 COPY requirements.txt /app/
@@ -40,9 +38,9 @@ EXPOSE 8000 8080
 
 
 # Set environment variables
-ENV AWS_ACCESS_KEY_ID='ASIAZI2LFWLVIYCTWZFH'
-ENV AWS_SECRET_ACCESS_KEY='Jbk9OfoDCo1eERdon1eYf0WAupZAHsGy0qOpf0WV'
-ENV AWS_DEFAULT_REGION='us-east-1'
+ENV AWS_ACCESS_KEY_ID=''
+ENV AWS_SECRET_ACCESS_KEY=''
+ENV AWS_DEFAULT_REGION=''
 
 
 # Set the entry point for the container.
