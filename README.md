@@ -26,9 +26,9 @@ BS S3 Dir: /keenanh/ingred_model
 ![V1 Test Results Screenshot](docs/V1Results.png)
 
 ##### Dockerized Test
-![Dockerized Test Results Text](docs/summary.text)
+![Edit Distance Results Text](docs/summary.text)
 
-![Dockerized Test Results Text](docs/summary_bert.text)
+![Bert Score Results Text](docs/summary_bert.text)
 
 
 
