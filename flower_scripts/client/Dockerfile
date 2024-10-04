@@ -29,10 +29,8 @@ RUN chmod +x /app/entrypoint.sh
 
 # Copy project files (including model operations and other necessary files)
 COPY certificates /app/certificates
-COPY server.py /app/client.py
+COPY server.py /app/server.py
 COPY util.py /app/util.py
-COPY model /app/model
-
 # Expose the WebSocket and HTTP ports
 EXPOSE 8000 8080
 
